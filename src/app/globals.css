@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/* Simple Theme Variables */
+:root {
+  --brand-primary: #0f766e;
+  --brand-secondary: #d97706;
+  --brand-bg: #fffbeb;
+}
+
+body {
+  background-color: var(--brand-bg);
+  color: #1f2937;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+h1, h2, h3 {
+  font-weight: bold;
+  letter-spacing: -0.02em;
+}
+
+/* Basic Utility Classes (Fallback if Tailwind fails) */
+.container { max-width: 80rem; margin: 0 auto; padding: 1rem; }
+.flex { display: flex; }
+.grid { display: grid; }
+.text-center { text-align: center; }
+.py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+.mb-8 { margin-bottom: 2rem; }
+.rounded-lg { border-radius: 0.5rem; }
+.shadow-sm { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
+.border { border-width: 1px; }
+.bg-white { background-color: white; }
+.text-gray-900 { color: #111827; }
+.text-gray-600 { color: #4b5563; }
+.font-bold { font-weight: 700; }
+.hover\:underline:hover { text-decoration: underline; }
