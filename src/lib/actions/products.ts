@@ -34,7 +34,7 @@ export async function createProduct(formData: FormData) {
   if (!user) throw new Error('Not authenticated');
 
   const { data: shop, error: shopError } = await supabase
-    .from('shops').select('id').eq('owner_id', user.id).single();
+    .from('shops').select('id, name').eq('owner_id', user.id).single();
   if (shopError || !shop) throw new Error('You must create a shop first');
 
   let rawVariants: unknown[];
@@ -137,7 +137,7 @@ export async function updateProduct(formData: FormData) {
   if (!user) throw new Error('Not authenticated');
 
   const { data: shop, error: shopError } = await supabase
-    .from('shops').select('id').eq('owner_id', user.id).single();
+    .from('shops').select('id, name').eq('owner_id', user.id).single();
   if (shopError || !shop) throw new Error('No shop found');
 
   const productId = formData.get('productId') as string;
@@ -248,7 +248,7 @@ export async function deleteProduct(productId: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
-  const { data: shop } = await supabase.from('shops').select('id').eq('owner_id', user.id).single();
+  const { data: shop } = await supabase.from('shops').select('id, name').eq('owner_id', user.id).single();
   if (!shop) throw new Error('No shop found');
 
   const { data: product, error: fetchError } = await supabase
@@ -292,7 +292,7 @@ export async function getPublicProducts(categorySlug?: string): Promise<ProductW
   `);
   query = query.eq('status', 'active').eq('shop.status', 'approved').order('created_at', { ascending: false });
   if (categorySlug) {
-    const { data: category } = await supabase.from('categories').select('id').eq('slug', categorySlug).maybeSingle();
+    const { data: category } = await supabase.from('categories').select('id, name').eq('slug', categorySlug).maybeSingle();
     if (!category) return [];
     query = query.eq('category_id', category.id);
   }
@@ -345,7 +345,7 @@ export async function getSellerProducts(): Promise<ProductWithVariants[]> {
 
   const { data: shop } = await supabase
     .from('shops')
-    .select('id')
+    .select('id, name')
     .eq('owner_id', user.id)
     .single();
 
